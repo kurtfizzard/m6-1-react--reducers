@@ -26,6 +26,27 @@ function reducer(state, action) {
         price: action.price,
       };
     }
+    case "cancel-booking-process": {
+      return {
+        ...initialState,
+      };
+    }
+    case "purchase-ticket-request":
+      return {
+        ...state,
+        status: "awaiting-response",
+      };
+    case "purchase-ticket-success":
+      return {
+        ...initialState,
+        status: "purchased",
+      };
+    case "purchase-ticket-failure":
+      return {
+        ...state,
+        status: "error",
+        error: "Please provide credit card information!",
+      };
     default:
       throw new Error(`Unrecognized action: ${action.type}`);
   }
@@ -40,6 +61,31 @@ export const BookingProvider = ({ children }) => {
       ...data,
     });
   };
+
+  const cancelBookingProcess = () => {
+    dispatch({
+      type: "cancel-booking-process",
+    });
+  };
+
+  const purchaseTicketRequest = () => {
+    dispatch({
+      type: "purchase-ticket-request",
+    });
+  };
+
+  const purchaseTicketSuccess = () => {
+    dispatch({
+      type: "purchase-ticket-success",
+    });
+  };
+
+  const purchaseTicketFailure = () => {
+    dispatch({
+      type: "purchase-ticket-failure",
+    });
+  };
+
   console.log(state);
 
   return (
@@ -48,6 +94,10 @@ export const BookingProvider = ({ children }) => {
         state,
         actions: {
           beginBookingProcess,
+          cancelBookingProcess,
+          purchaseTicketRequest,
+          purchaseTicketSuccess,
+          purchaseTicketFailure,
         },
       }}
     >

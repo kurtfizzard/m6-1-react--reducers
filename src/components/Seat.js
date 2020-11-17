@@ -1,27 +1,26 @@
 import React from "react";
 import styled from "styled-components";
 
+import { BookingContext } from "./BookingContext";
+
 import seatImage from "../assets/seat-available.svg";
 
 import Tippy from "@tippy.js/react";
 import "tippy.js/dist/tippy.css";
 
-import { BookingContext } from "./BookingContext";
-
 const Seat = ({ seat, seatId, rowIndex, seatIndex, tippyContent }) => {
   const { actions } = React.useContext(BookingContext);
   const { beginBookingProcess } = actions;
-  //   console.log(seatId);
 
   return (
-    <Tippy content={tippyContent}>
-      <Wrapper>
-        <Button
-          disabled={seat.isBooked}
-          onClick={() => {
-            beginBookingProcess({ seatId, price: seat.price });
-          }}
-        >
+    <Wrapper>
+      <Button
+        disabled={seat.isBooked}
+        onClick={() => {
+          beginBookingProcess({ seatId, price: seat.price });
+        }}
+      >
+        <Tippy content={tippyContent}>
           <SeatImg
             alt="seat"
             className={seat.isBooked ? "isBooked" : ""}
@@ -30,9 +29,9 @@ const Seat = ({ seat, seatId, rowIndex, seatIndex, tippyContent }) => {
             seatIndex={seatIndex}
             src={seatImage}
           />
-        </Button>
-      </Wrapper>
-    </Tippy>
+        </Tippy>
+      </Button>
+    </Wrapper>
   );
 };
 
